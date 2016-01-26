@@ -4,6 +4,7 @@
   "description": "Angular study project.",
   "main": "index.js",
   "scripts": {
+    "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "mizuki_r",
@@ -19,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/rymizuki/angular-study/issues"
   },
-  "homepage": "https://github.com/rymizuki/angular-study#readme"
+  "homepage": "https://github.com/rymizuki/angular-study#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-webserver": "^0.9.1"
+  }
 }
