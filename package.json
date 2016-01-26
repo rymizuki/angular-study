@@ -1,0 +1,23 @@
+{
+  "name": "angular-study",
+  "version": "0.0.0",
+  "description": "Angular study project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mizuki_r",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rymizuki/angular-study.git"
+  },
+  "keywords": [
+    "angular",
+    "study"
+  ],
+  "bugs": {
+    "url": "https://github.com/rymizuki/angular-study/issues"
+  },
+  "homepage": "https://github.com/rymizuki/angular-study#readme"
+}
