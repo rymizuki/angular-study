@@ -117,7 +117,7 @@ angular.module('angularStudy', [])
 
 [Modules](https://docs.angularjs.org/guide/module)
 
-## JavaScriptからHTML上に文字列を出力する
+### JavaScriptからHTML上に文字列を出力する
 
 JavaScriptとHTML(template)をつなぐのは `controller` の役目です。
 
@@ -157,13 +157,13 @@ angular.module('angularStudy', [])
 </html>
 ```
 
-### ngController
+#### ngController
 
 ControllerとDOMを紐付けるディレクティブです。
 
 このディレクティブが指定されたDOMと、ディレクティブが指定するControllerをひも付けます。
 
-### ngBind
+#### ngBind
 
 指定された値をコンパイルした結果をHTMLのTextNodeに反映します。
 
@@ -181,12 +181,74 @@ template
 
 この現象はよく「髭」と呼ばれる。
 
-### module.controller
+#### module.controller
 
 Controllerをmoduleに定義します。
 第二引数に登録する関数はコンストラクタで、 `ng-controller="Ctrl as ctrl"` のように `as` を指定するとインスタンス化され、そのControllerのコンテキスト(`this`)をtemplateから参照できるようになります。
 
 `as`を使わない場合、 `$scope` を注入しそのプロパティに値を追加することでtemplateから参照できるようになりますが、最近ではあまり推奨されません。
+
+
+## イベントハンドリング
+
+DOMで発生したイベントを補足し、処理を実行する
+
+### ngClick
+
+```js
+angular.module('angularStudy', [])
+  .controller('App', function () {
+    this.count = 0
+    this.onClick = function () {
+      this.count++
+    }
+  })
+```
+
+```html
+<!doctype html>
+<html ng-app="angularStudy">
+  <div ng-controller="App as app">
+    <p>カウント: <span ng-bind="app.count"></span></p>
+    <button type="button" ng-click="app.onClick()">カウントアップ</button>
+  </div>
+</html>
+```
+
+### 例題1: ボタンを押したらクッキーの枚数が増えてく仕組みを作ってみよう
+
+#### 以下のDOMを作成
+
+- クッキーの枚数
+- クッキーを作るボタン
+
+#### 振る舞い
+
+- _クッキーを作るボタン_ をクリックしたら _クッキーの枚数_ が`1`増える
+
+
+## 繰り返し処理(`ngRepeat`)
+
+`ngRepeat`ディレクティブを使うと、コレクションの繰り返し処理が行えます。
+
+```html
+<ul ng-init="items = ['a', 'b', 'c', 'd']">
+  <li ng-repeat="item in  items" ng-bind="item"></li>
+</ul>
+```
+[ngRepeat](https://docs.angularjs.org/api/ng/directive/ngRepeat)
+
+### 例題2: ボタンを押したらクッキーが増えていく仕組みを作ってみよう
+
+#### 以下のDOMを追加
+
+- クッキー
+
+#### 振る舞い
+
+- _クッキーを作るボタン_ をクリックしたら _クッキーの枚数_ が`1`増える
+- _クッキーを作るボタン_ をクリックしたら _クッキー_ が一つ増える
+
 
 ## 条件分岐
 
@@ -221,50 +283,42 @@ template上で表示を出し分けたいケースがあるときに用いるDir
 </div>
 ```
 
-## イベントハンドリング
+### 例題3: 5個クッキーが溜まったら _クッキーを作るボタン_ を２つにしてみよう
 
-DOMで発生したイベントを補足し、処理を実行する
+#### 以下のDOMを追加
 
-### ngClick
+- _クッキーを作るボタン2_
 
-```js
-angular.module('angularStudy', [])
-  .controller('App', function () {
-    this.count = 0
-    this.onClick = function () {
-      this.count++
-    }
-  })
-```
-
-```html
-<!doctype html>
-<html ng-app="angularStudy">
-  <div ng-controller="App as app">
-    <p>カウント: <span ng-bind="app.count"></span></p>
-    <button type="button" ng-click="app.onClick()">カウントアップ</button>
-  </div>
-</html>
-```
-
-## 例題1: ボタンを押したらクッキーの枚数が増えてく仕組みを作ってみよう
-
-### 以下のDOMを作成
-
-- クッキーの枚数
-- クッキーを作るボタン
-
-### 振る舞い
-
-- _クッキーを作るボタン_ をクリックしたら _クッキーの枚数_ が`1`増える
-
-## 例題2: ボタンを押したらクッキーが増えていく仕組みを作ってみよう
-
-### 以下のDOMを追加
-
-- クッキー
-
-### 振る舞い
+#### 振る舞い
 
 - _クッキーを作るボタン_ をクリックしたら _クッキーの枚数_ が`1`増える
 - _クッキーを作るボタン_ をクリックしたら _クッキー_ が一つ増える
+- _クッキーの枚数_ が `5` 以上の時に _クッキーを作るボタン2_ を表示
+
+
+## タイマー処理
+
+`$timeout`サービスを使うと、 `setTimeout`と同じように指定ミリ秒後にコールバックを実行できる。
+
+[$timeout](https://docs.angularjs.org/api/ng/service/$timeout)
+
+```
+$timeout(function () {
+  console.log('5秒後に実行')
+}, 5 * 1000)
+```
+
+### 例題4: _クッキーを作るボタン_ を実行してから10秒は再実行できないようにしよう
+
+#### 振る舞い
+
+- _クッキーを作るボタン_ をクリックしたら _クッキーの枚数_ が`1`増える
+- _クッキーを作るボタン_ をクリックしたら _クッキー_ が一つ増える
+- _クッキーの枚数_ が `5` 以上の時に _クッキーを作るボタン2_ を表示
+- _クッキーを作るボタン_ 、 _クッキーを作るボタン2_ を一度実行したら10秒間ボタンは押せなくなる
+
+#### hint
+
+- [ngDisabled](https://docs.angularjs.org/api/ng/directive/ngDisabled)
+- [ngClass](https://docs.angularjs.org/api/ng/directive/ngClass)
+
